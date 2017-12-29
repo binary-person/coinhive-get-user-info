@@ -16,5 +16,13 @@
     "Coinhive"
   ],
   "author": "Simon Cheng",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scheng123/coinhive-get-user-info.git"
+  },
+  "bugs": {
+    "url": "https://github.com/scheng123/coinhive-get-user-info/issues"
+  },
+  "homepage": "https://github.com/scheng123/coinhive-get-user-info#readme"
 }
