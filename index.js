@@ -37,7 +37,7 @@ function refreshData(){
     newJsonData = JSON.parse(get('https://api.coinhive.com/user/top?secret='+config.secretKey));
 }
 
-var port = process.env.PORT;
+var port = config.port;
 var oldJsonData = '';
 var timesRan = 0;
 var htmlFront = "<!DOCTYPE html>\n<html><head><title>Coinhive User Info</title><style>td{ border: 1px solid black; text-align: center; } h2{ text-align: center; } table{ border: 1px solid black; margin: auto; width: 50%; text-align: right;}</style></head><body><h2>Coinhive User Info</h2><table><tbody><tr> <td>Name</td> <td>Hashes</td> <td>Hashes Per Second</td> </tr>";
