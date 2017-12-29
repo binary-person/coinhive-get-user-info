@@ -37,7 +37,6 @@ function refreshData(){
     newJsonData = JSON.parse(get('https://api.coinhive.com/user/top?secret='+config.secretKey));
 }
 
-var keepAliveUrl = "https://coinhive-user-data-sc.now.sh";
 var port = process.env.PORT;
 var oldJsonData = '';
 var timesRan = 0;
@@ -94,6 +93,6 @@ setInterval(function(){
     main();
 }, config.timeLength);
 
-if(keepAliveUrl !== ''){
-    setInterval(function(){get(keepAliveUrl)}, 60000);
+if(config.keepAliveUrl !== ''){
+    setInterval(function(){get(config.keepAliveUrl)}, 60000);
 }
