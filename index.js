@@ -28,7 +28,7 @@ function get(url) {
 }
 
 var newJsonData = JSON.parse(get('https://api.coinhive.com/user/top?secret='+config.secretKey));
-if(newJsonData.success == 'false'){
+if(newJsonData.success == false){
     console.log('');
     console.log('Error on getting coinhive user data. Error: '+newJsonData.error);
     process.exit(1);
