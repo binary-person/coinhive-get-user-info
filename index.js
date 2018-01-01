@@ -40,7 +40,10 @@ function refreshData(){
 var port = config.port;
 var oldJsonData = '';
 var timesRan = 0;
-var htmlFront = "<!DOCTYPE html>\n<html><head><title>Coinhive User Info</title><style>td{ border: 1px solid black; text-align: center; } h2{ text-align: center; } table{ border: 1px solid black; margin: auto; width: 50%; text-align: right;}</style></head><body><h2>Coinhive User Info</h2><table><tbody><tr> <td>Name</td> <td>Hashes</td> <td>Hashes Per Second</td> </tr>";
+//var red = '#FF6D6B';
+var red = '#FFFFFF';
+var green = '#6BFF6D';
+var htmlFront = "<!DOCTYPE html>\n<html><head><title>Coinhive User Info</title><style>.stopped { background-color: " +  red + " } .started { background-color: " +  green + " } td{ border: 1px solid black; text-align: center; } h2{ text-align: center; } table{ border: 1px solid black; margin: auto; width: 50%; text-align: right;}</style><script>//function doSetTimeout(i, length){setTimeout(function(){window.stopped[i].style.backgroundColor = 'white'}, length)} window.onload = function(){if(document.getElementsByClassName('stopped')[0]){setInterval(function(){window.stopped = document.getElementsByClassName('stopped'); for(var i = 0; i < stopped.length; i++){doSetTimeout(i, 500); stopped[i].style.backgroundColor = '" + red + "'}}, 1000)}}</script></head><body><h2>Coinhive User Info</h2><table><tbody><tr> <td>Name</td> <td>Hashes</td> <td>Hashes Per Second</td> </tr>";
 var htmlBack = "</tbody></table></body></html>";
 var htmlMiddle = "";
 var mainHtml = "";
@@ -48,7 +51,11 @@ var mainHtml = "";
 function updateTable(names, totals, speed){ // In array! The arrays must match each other, for ex. : names[0] relates to totals[0]
     htmlMiddle = "";
     for(var i = 0; i < names.length; i++){
-        htmlMiddle = htmlMiddle + '\n<tr><td>'+names[i]+'</td><td>'+totals[i]+'</td><td>'+speed[i]+'</td></tr>';
+        if(speed[i] !== '0 Hashes/s' && speed[i] !== ''){
+            htmlMiddle = htmlMiddle + '\n<tr><td class="started">'+names[i]+'</td><td>'+totals[i]+'</td><td>'+speed[i]+'</td></tr>';
+        }else{
+            htmlMiddle = htmlMiddle + '\n<tr><td class="stopped">'+names[i]+'</td><td>'+totals[i]+'</td><td>'+speed[i]+'</td></tr>';
+        }
     }
     mainHtml = htmlFront+htmlMiddle+htmlBack;
 }
@@ -68,7 +75,7 @@ function main(){
     }else{
         refreshData();
         for(var i = 0; i < newJsonData.users.length; i++){
-            newSpeed[i] = (newJsonData.users[i].total - oldJsonData.users[i].total) / (config.timeLength / 1000) + ' Hashes/S';
+            newSpeed[i] = (newJsonData.users[i].total - oldJsonData.users[i].total) / (config.timeLength / 1000) + ' Hashes/s';
         }
         oldJsonData = newJsonData;
     }
@@ -76,9 +83,10 @@ function main(){
     
     //// Record number of times ran
     timesRan = timesRan + 1;
-    process.stdout.clearLine();
-    process.stdout.cursorTo(0);
-    process.stdout.write('This had been run '+timesRan+' times!');
+    // process.stdout.clearLine();
+    // process.stdout.cursorTo(0);
+    // process.stdout.write('This had been run '+timesRan+' times!');
+    console.log('This had been run '+timesRan+' times!');
 }
 app.get('/', function(req, res){
     res.send(mainHtml);
